@@ -36,3 +36,8 @@ json_content=$(cat <<EOF
   "Exposure Time": "$exposure_time",
   "ISO": $iso
 }
+EOF
+)
+
+# Save JSON metadata to file
+echo "$json_content" > "$json_filepath"
