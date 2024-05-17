@@ -4,14 +4,14 @@
 // 2022-03-24, Kjeld Jensen, First version
 
 // Configuration
-#define WIFI_SSID       "EMLI_TEAM_XX"
-#define WIFI_PASSWORD    ""
+#define WIFI_SSID       "EMLI-TEAM-04"
+#define WIFI_PASSWORD    "emliemli"
 
-#define MQTT_SERVER      "io.adafruit.com"
-#define MQTT_SERVERPORT  1883
+#define MQTT_SERVER      "mqtt-dashboard.com"
+#define MQTT_SERVERPORT  1883 
 #define MQTT_USERNAME    ""
 #define MQTT_KEY         ""
-#define MQTT_TOPIC       "/feeds/count"
+#define MQTT_TOPIC       "sdu/2024/emuli/group04/wildfiretrigger"  
 
 // wifi
 #include <ESP8266WiFiMulti.h>
@@ -21,7 +21,7 @@ const uint32_t conn_tout_ms = 5000;
 
 // counter
 #define GPIO_INTERRUPT_PIN 4
-#define DEBOUNCE_TIME 100
+#define DEBOUNCE_TIME 100 
 volatile unsigned long count_prev_time;
 volatile unsigned long count;
 
@@ -44,7 +44,7 @@ ICACHE_RAM_ATTR void count_isr()
 {
   if (count_prev_time + DEBOUNCE_TIME < millis() || count_prev_time > millis())
   {
-    count_prev_time = millis();
+    count_prev_time = millis(); 
     count++;
   }
 }
@@ -157,3 +157,4 @@ void loop()
       Serial.println(count);
     }
 }
+
