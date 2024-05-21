@@ -46,7 +46,7 @@ done
 echo "Now pushing the annotated image up into Github by running cloud.sh"
 if [ $CHECK_ANNOTATION_STATUS == true ]; then
   echo "Uploading annotated files"
-  ./upload.sh $PATH_TO_IMAGES
+  ./upload.sh $IMAGE_DIR
 else
   echo "No new annotated files."
 fi
