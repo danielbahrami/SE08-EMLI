@@ -6,7 +6,7 @@ current_date=$(date +"%Y-%m-%d")
 timestamp=$(date +"%H%M%S_%3N")
 local_time=$(date +"%H:%M:%S.%3N%:z")
 epoch_seconds=$(date +"%s.%3N")
-trigger=$1  # The trigger type is passed as an argument
+trigger=$1 # The trigger type is passed as an argument
 
 # Create directory if it doesn't exist
 mkdir -p "$base_dir/$current_date"
@@ -26,7 +26,8 @@ exposure_time=$(exiftool -s -s -s -ExposureTime "$photo_filepath")
 iso=$(exiftool -s -s -s -ISO "$photo_filepath")
 
 # Create JSON metadata
-json_content=$(cat <<EOF
+json_content=$(
+  cat <<EOF
 {
   "File Name": "$photo_filename",
   "Create Date": "$current_date $local_time",
@@ -40,4 +41,4 @@ EOF
 )
 
 # Save JSON metadata to file
-echo "$json_content" > "$json_filepath"
+echo "$json_content" >"$json_filepath"
