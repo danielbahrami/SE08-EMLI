@@ -40,5 +40,5 @@ do
         control_wipe 0
         echo "wiping 0"
     done
-    sleep 5  # Wait 10 seconds until reconnection
-done # &  # Discomment the & to run in background (but you should rather run THIS script in background)
+    sleep 5  # Wait 5 seconds until reconnection
+done 
