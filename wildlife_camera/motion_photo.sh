@@ -7,7 +7,7 @@ photo_file1="${photo_time1}.jpg"
 # Take first inital photo
 rpicam-still -t 0.01 -o "$photo_file1"
 
-while [true];
+while true;
 do
     sleep 2
     # Take second photo
@@ -31,7 +31,6 @@ do
         iso=$(exiftool -s -s -s -ISO "$photo_file2")
 
         # Create JSON metadata
-        # Create JSON metadata
         json_content=$(cat <<EOF
         {
         "File Name": "$photo_filename",
@@ -42,8 +41,10 @@ do
         "Exposure Time": "$exposure_time",
         "ISO": $iso
         }
-        EOF
+EOF
         )
+        # Save JSON metadata to file
+        echo "$json_content" > "$output_dir/$current_date/${photo_time2}.json"
     fi
 
     # photo2 bocomes photo1
