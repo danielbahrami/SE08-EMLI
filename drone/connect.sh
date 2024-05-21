@@ -11,10 +11,14 @@ do
         break;
     fi
 done
+echo "found cam"
 
 # connect
-nmcli dev wifi connect $cam_path password $cam_pass
+nmcli dev wifi connect $cam_ssid password $cam_pass
 
+chmod 777 ./log_wifi.sh
+chmod 777 ./save_files.sh
+#./log_wifi.sh &
 ./save_files.sh
 
 nmcli con down $cam_ssid
