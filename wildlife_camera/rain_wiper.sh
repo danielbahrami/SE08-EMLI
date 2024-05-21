@@ -24,7 +24,7 @@ do
     rain_detect_value=$(echo "$json_message" | jq -r '.rain_detect')
     
 
-    if [ "$rain_detect_value" -eq 1 ]; then
+    if [ $rain_detect_value -eq 1 ]; then
         # Publish message to MQTT broker
         mosquitto_pub -h $MQTT_HOST -t $MQTT_TOPIC_COMMAND -m $rain_detect_value
     fi
