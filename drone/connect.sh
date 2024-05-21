@@ -13,6 +13,8 @@ do
 done
 
 # connect
-mcli dev wifi connect $cam_path password $cam_pass
+nmcli dev wifi connect $cam_path password $cam_pass
 
 ./save_files.sh
+
+nmcli con down $cam_ssid
