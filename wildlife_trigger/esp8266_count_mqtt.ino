@@ -51,8 +51,8 @@ ICACHE_RAM_ATTR void count_isr()
 
 void debug(const char *s)
 {
-  Serial.print (millis());
-  Serial.print (" ");
+  Serial.print(millis());
+  Serial.print(" ");
   Serial.println(s);
 }
 
@@ -61,15 +61,15 @@ void mqtt_connect()
   int8_t ret;
 
   // Stop if already connected.
-  if (! mqtt.connected())
+  if (!mqtt.connected())
   {
     debug("Connecting to MQTT... ");
     while ((ret = mqtt.connect()) != 0)
     { // connect will return 0 for connected
-         Serial.println(mqtt.connectErrorString(ret));
-         debug("Retrying MQTT connection in 5 seconds...");
-         mqtt.disconnect();
-         delay(5000);  // wait 5 seconds
+      Serial.println(mqtt.connectErrorString(ret));
+      debug("Retrying MQTT connection in 5 seconds...");
+      mqtt.disconnect();
+      delay(5000); // wait 5 seconds
     }
     debug("MQTT Connected");
   }
@@ -77,7 +77,7 @@ void mqtt_connect()
 
 void print_wifi_status()
 {
-  Serial.print (millis());
+  Serial.print(millis());
   Serial.print(" WiFi connected: ");
   Serial.print(WiFi.SSID());
   Serial.print(" ");
@@ -104,7 +104,7 @@ void setup()
   WiFi.persistent(false);
   WiFi.mode(WIFI_STA);
   WiFiMulti.addAP(WIFI_SSID, WIFI_PASSWORD);
-  if(WiFiMulti.run(conn_tout_ms) == WL_CONNECTED)
+  if (WiFiMulti.run(conn_tout_ms) == WL_CONNECTED)
   {
     print_wifi_status();
   }
@@ -117,7 +117,7 @@ void setup()
 void publish_data()
 {
   char payload[10];
-  sprintf (payload, "%ld", count);
+  sprintf(payload, "%ld", count);
   count = 0;
   Serial.print(millis());
   Serial.print(" Publishing: ");
@@ -125,12 +125,12 @@ void publish_data()
 
   Serial.print(millis());
   Serial.println(" Connecting...");
-  if((WiFiMulti.run(conn_tout_ms) == WL_CONNECTED))
+  if ((WiFiMulti.run(conn_tout_ms) == WL_CONNECTED))
   {
     print_wifi_status();
-  
+
     mqtt_connect();
-    if (! count_mqtt_publish.publish(payload))
+    if (!count_mqtt_publish.publish(payload))
     {
       debug("MQTT failed");
     }
@@ -143,18 +143,18 @@ void publish_data()
 
 void loop()
 {
-    if (millis() - prev_post_time >= PUBLISH_INTERVAL)
-    {
-      prev_post_time = millis();
-      publish_data();
-    }
-   
-    if (millis() - prev_debug_time >= DEBUG_INTERVAL)
-    {
-      prev_debug_time = millis();
-      Serial.print(millis());
-      Serial.print(" ");
-      Serial.println(count);
-    }
+  if (millis() - prev_post_time >= PUBLISH_INTERVAL)
+  {
+    prev_post_time = millis();
+    publish_data();
+  }
+
+  if (millis() - prev_debug_time >= DEBUG_INTERVAL)
+  {
+    prev_debug_time = millis();
+    Serial.print(millis());
+    Serial.print(" ");
+    Serial.println(count);
+  }
 }
 
