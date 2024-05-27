@@ -11,7 +11,7 @@
 #define MQTT_SERVERPORT 1883
 #define MQTT_USERNAME ""
 #define MQTT_KEY ""
-#define MQTT_TOPIC "sdu/2024/emuli/group04/wildfiretrigger"
+#define MQTT_TOPIC "org/sdu/2024/emli/group04/wilddrone/trigger"
 
 // wifi
 #include <ESP8266WiFiMulti.h>

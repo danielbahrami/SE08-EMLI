@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MQTT_HOST=${1:-"mqtt://mqtt-dashboard.com"}
-MQTT_TOPIC_LISTEN=${3:-"sdu/2024/emuli/group04/wildfiretrigger"}
+MQTT_TOPIC_LISTEN=${3:-"org/sdu/2024/emli/group04/wilddrone/trigger"}
 
 while true; do # Keep an infinite loop to reconnect when connection lost/broker unavailable
     mosquitto_sub -h $MQTT_HOST -t $MQTT_TOPIC_LISTEN | while read -r payload; do
