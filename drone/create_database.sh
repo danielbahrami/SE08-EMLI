@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Path to the SQLite database
 databasePath="/home/simonplatz/database/wifi_log.db"
 

@@ -8,28 +8,25 @@ cam_home="simonplatz@192.168.10.1"
 cam_photo_path="$cam_home:/home/simonplatz/wildlife_photos"
 cam_photo_pass="simonplatz"
 
-echo "looking for cam"
-# find wifi
-while true;
-do
-    if nmcli -f SSID device wifi | grep -q $cam_ssid;
-    then
-        break;
+echo "Looking for cam"
+# Find Wi-Fi
+while true; do
+    if nmcli -f SSID device wifi | grep -q $cam_ssid; then
+        break
     fi
 done
-echo "found cam"
-echo "connecting ..."
-# connect
+echo "Found cam"
+echo "Connecting..."
+# Connect
 nmcli dev wifi connect $cam_ssid password $cam_wifi_pass
-echo "conneted"
+echo "Connected"
 
-#sync time
-echo "sync time"
+# Sync time
+echo "Sync time"
 sshpass -p $cam_pass ssh $cam_home sudo date --set @$(date -u +%s)
 
 chmod 777 ./log_wifi.sh
 chmod 777 ./save_files.sh
-#./log_wifi.sh &
 cat ./save_files.sh | sshpass -p $cam_pass ssh $cam_home
 
 mkdir -p ~/wildlife_photos
