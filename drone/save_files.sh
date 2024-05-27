@@ -22,12 +22,13 @@ for dir in */; # wildlife_photos
         if [[ "$ext" == "json" ]];
         then
             # check that the image has not been copied yet
-            jq '."Drone Copy"' $file &> /dev/null
-            if [ $? -ne 0 ];
+            copied=$(jq '."Drone Copy" != null' $file)
+            echo $copied
+            if [[ $copied == "false" ]];
             then
                 epoch_seconds=$(date +"%s.%3N")     
                 echo "setting copy time"
-                jq --arg id "$dron_id" --arg epoch $epoch_seconds '. += {"Drone Copy": { "Drone Id": $id, "Seconds Epoch": $epoch } }' $file > tmp.json && cp tmp.json $file
+                jq --arg id "$dron_id" --arg epoch $epoch_seconds '. += {"Drone Copy": { "Drone Id": $id, "Seconds Epoch": $epoch } }' $file &> tmp.json && cp tmp.json $file
                 jq $file
                 #echo "scp $file:$drone_path"
                 #scp $file:$dron_path # save json
@@ -35,6 +36,7 @@ for dir in */; # wildlife_photos
             fi
         fi
     done
+    cd ..
 done
 
 # close ssh connection
