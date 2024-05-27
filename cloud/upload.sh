@@ -1,7 +1,8 @@
 #!/bin/bash
 
-#path to images
+#Path to images
 IMAGE_DIR=${1:-"/path/to/your/images"}
+#Git users
 USER_NAME=${2:-"Your Name"}
 USER_EMAIL=${3:-"your.email@example.com"}
 

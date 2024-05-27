@@ -2,8 +2,10 @@
 
 # Directory containing the images
 IMAGE_DIR=${1:-"/path/to/your/images"}
+USER_NAME=${2:-"Your Name"}
+USER_EMAIL=${3:-"your.email@example.com"}
 # Ollama endpoint
-GENERATEENDPOINT=${2:-"http://localhost:11434/api/generate"}
+GENERATEENDPOINT=${4:-"http://localhost:11434/api/generate"}
 
 CHECK_ANNOTATION_STATUS=false
 
@@ -23,7 +25,7 @@ while true; do
 
       # check if annotaiton alreaddy is there
       # 2>&1 silences all output from the command, including error messages
-      if jq -e '.Annotation' "$json_file" >/dev/null 2>&1; then
+      if jq -e '.Annotation' "$json_file" > /dev/null 2>&1; then
         echo "Annotation JSON object already exists for $filename"
         # annotation already excists, therefore img is skipped with continue
         continue
@@ -63,7 +65,7 @@ while true; do
   echo "Now pushing the annotated image up into Github by running cloud.sh"
   if [ $CHECK_ANNOTATION_STATUS = true ]; then
     echo "Uploading annotated files"
-    ./upload.sh $IMAGE_DIR
+    ./upload.sh $IMAGE_DIR $USER_NAME $USER_EMAIL
     CHECK_ANNOTATION_STATUS=false
   else
     echo "No changes in annotated files"
