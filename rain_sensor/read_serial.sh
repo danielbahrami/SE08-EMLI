@@ -5,22 +5,11 @@ DEVICE=${1:-"/dev/ttyAIO"}
 MQTT_HOST=${2:-"mqtt-dashboard.com"}
 MQTT_TOPIC_COMMAND=${3:-"org/sdu/2024/emli/group04/wilddrone/rain/command"}
 
-change_wipe() {
-    degrees="$1"
-    if [ -c $DEVICE ]; then
-        JSON= "{\"wiper_angle\": $degrees}"
-        echo $JSON >$DEVICE
-    fi
-    echo "wiping done"
-}
-
 while true; do # Keep an infinite loop to reconnect when connection lost/broker unavailable
     # Read JSON message from serial port
     json_message=$(cat "$DEVICE" | jq -c .)
 
     rain_detect_value=$(echo "$json_message" | jq -r '.rain_detect')
-
-    echo "check am i in loop"
 
     if [ $rain_detect_value -eq 1 ]; then
         # Publish message to MQTT broker
