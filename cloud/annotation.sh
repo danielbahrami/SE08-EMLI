@@ -29,15 +29,19 @@ while true; do
         continue
       fi
 
+      # Base64 encode the image
+      # Setting it to 0 means there will be no line breaks in the output, resulting in a single continuous line of base64-encoded data
+      img_base64=$(base64 -w 0 "$image_file")
+
       ### Ollama send ###
       # Payload for the Ollama
-      JSON_MSG="{\"model\": \"gemma:7b\", \"prompt\": \"describe this image briefly\", \"stream\": false, \"images\": [\"$img\"]}"
-      # Writes the value of the JSON_PAYLOAD variable to a file named "payload.json"
-      echo $JSON_MSG > "payload.json"
+      JSON_MSG="{\"model\": \"gemma:7b\", \"prompt\": \"describe this image briefly\", \"stream\": false, \"images\": [\"$img_base64\"]}"
 
-      #The @ symbol indicates that curl should read the data from the payload.json file.
-      curl_response=$(curl -f -s -X POST -H "Content-Type: application/json" --data-binary @payload.json "$GENERATEENDPOINT")
-      
+      # Send the JSON payload to Ollama's generate endpoint using curl
+      curl_response=$(curl -s -X POST "$GENERATEENDPOINT" \
+        -H "Content-Type: application/json" \
+        -d "$JSON_MSG")
+
       #Check if failed
       if [ $? -ne 0 ]; then
         echo "Annotation of $filename failed. Check internet"
@@ -50,7 +54,7 @@ while true; do
       ANNOTATION_JSON="{\"Annotation\": {\"Source\": \"gemma:7b\", \"Test\": \"$response\"}}"
 
       # Write the newly created JSON annotation to the json file
-      jq --argjson annotation "$ANNOTATION_JSON" '.annotations += [$ANNOTATION_JSON]' $json_file.json > $temp.json && mv $temp.json $json_file.json
+      jq --argjson annotation "$ANNOTATION_JSON" '.Annotations += [$ANNOTATION_JSON]' $json_file.json > $temp.json && mv $temp.json $json_file.json
       $CHECK_ANNOTATION_STATUS=true
     fi
   done
