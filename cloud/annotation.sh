@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Directory containing the images
-IMAGE_DIR=${1:-"/path/to/your/images"}
-USER_NAME=${2:-"Your Name"}
-USER_EMAIL=${3:-"your.email@example.com"}
+IMAGE_DIR=${1:-"/path/to/images"}
+AUTHOR_NAME=${2:-"Name"}
+AUTHOR_EMAIL=${3:-"email@example.com"}
 # Ollama endpoint
 GENERATEENDPOINT=${4:-"http://localhost:11434/api/generate"}
 
@@ -65,7 +65,7 @@ while true; do
   echo "Now pushing the annotated image up into Github by running cloud.sh"
   if [ $CHECK_ANNOTATION_STATUS = true ]; then
     echo "Uploading annotated files"
-    ./upload.sh $IMAGE_DIR $USER_NAME $USER_EMAIL
+    ./upload.sh $IMAGE_DIR $AUTHOR_NAME $AUTHOR_EMAIL
     CHECK_ANNOTATION_STATUS=false
   else
     echo "No changes in annotated files"
