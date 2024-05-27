@@ -23,7 +23,7 @@ while true; do
 
       # check if annotaiton alreaddy is there
       # 2>&1 silences all output from the command, including error messages
-      if jq -e '.Annotation' "$json_file" > /dev/null 2>&1; then
+      if jq -e '.Annotation' "$json_file" >/dev/null 2>&1; then
         echo "Annotation JSON object already exists for $filename"
         # annotation already excists, therefore img is skipped with continue
         continue
@@ -54,7 +54,7 @@ while true; do
       ANNOTATION_JSON="{\"Annotation\": {\"Source\": \"gemma:7b\", \"Test\": \"$response\"}}"
 
       # Write the newly created JSON annotation to the json file
-      jq --argjson annotation "$ANNOTATION_JSON" '.Annotations += [$ANNOTATION_JSON]' $json_file.json > $temp.json && mv $temp.json $json_file.json
+      jq --argjson annotation "$ANNOTATION_JSON" '.Annotations += [$ANNOTATION_JSON]' $json_file.json >$temp.json && mv $temp.json $json_file.json
       $CHECK_ANNOTATION_STATUS=true
     fi
   done

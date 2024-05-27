@@ -10,26 +10,24 @@ change_wipe() {
     degrees="$1"
     if [ -c $DEVICE ]; then
         JSON= "{\"wiper_angle\": $degrees}"
-        echo $JSON > $DEVICE
+        echo $JSON >$DEVICE
     fi
     echo "wiping done"
 }
 
-while true  # Keep an infinite loop to reconnect when connection lost/broker unavailable
-do
+while true; do # Keep an infinite loop to reconnect when connection lost/broker unavailable
 
     # Read JSON message from serial port
     json_message=$(cat "$serial_port" | jq -c .)
 
     rain_detect_value=$(echo "$json_message" | jq -r '.rain_detect')
-    
+
     if [ $rain_detect_value -eq 1 ]; then
         # Publish message to MQTT broker
         mosquitto_pub -h $MQTT_HOST -t $MQTT_TOPIC_COMMAND -m $rain_detect_value
     fi
 
-    mosquitto_sub -h $MQTT_HOST -t $MQTT_TOPIC_LISTEN | while read -r payload
-    do
+    mosquitto_sub -h $MQTT_HOST -t $MQTT_TOPIC_LISTEN | while read -r payload; do
         # Here is the callback to execute whenever you receive a message:
         echo "Rx MQTT: ${payload}"
         # Control the rain wiper.
@@ -39,5 +37,5 @@ do
         control_wipe 0
         echo "wiping 0 degrees"
     done
-    sleep 5  # Wait 5 seconds until reconnection
-done 
+    sleep 5 # Wait 5 seconds until reconnection
+done
