@@ -3,7 +3,7 @@ cam_ssid="EMLI-TEAM-04"
 while true;
 do
     nmcli con show --active | grep $cam_ssid > /dev/null
-    if [$? == 0];
+    if [$? -eq 0];
     then
         break
     fi
