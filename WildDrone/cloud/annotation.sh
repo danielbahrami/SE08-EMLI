@@ -2,9 +2,9 @@
 
 # Directory containing the images
 IMAGE_DIR=${1:-"/path/to/your/images"}
-USER_NAME=${2:-"Your Name"}
-USER_EMAIL=${3:-"your.email@example.com"}
-# Ollama endpoint - follow the following codes
+AUTHOR_NAME=${2:-"Name"}
+AUTHOR_EMAIL=${3:-"email@example.com"}
+# Ollama endpoint - follow the below commands
 # $ ollama serve
 # $ ollama pull llava ; if not already pulled 
 GENERATEENDPOINT=${4:-"http://localhost:11434/api/generate"}
@@ -45,16 +45,14 @@ while true; do
 
       #Check if failed
       if [ $? -ne 0 ]; then
-        echo "Annotation of $filename failed. Check internet"
+        echo "Annotating $filename failed... Check internet"
         continue
       fi
 
       # Extract the description response from curl command
       response=$(echo "$curl_response" | jq -r '.response')
-      # Create annotation JSON object
+      # Create the JSON annotation
       ANNOTATION_JSON="{\"Source\": \"llava\", \"Test\": \"$response\"}"
-
-      echo $ANNOTATION_JSON
 
       # Write the newly created JSON annotation to the json file      
       jq --argjson Annotation "$ANNOTATION_JSON" '.+={$Annotation}' "$json_file" > tmp.json && mv tmp.json "$json_file"
