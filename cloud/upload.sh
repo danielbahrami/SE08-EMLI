@@ -1,25 +1,43 @@
 #!/bin/bash
 
-#path to images
+# Path to images
 IMAGE_DIR=${1:-"/path/to/your/images"}
 USER_NAME=${2:-"Your Name"}
 USER_EMAIL=${3:-"your.email@example.com"}
 
-# create user
+# Create user
 git config --local user.name "$USER_NAME"
 git config --local user.email "$USER_EMAIL"
 
-# go to images directory
-cd $PATH_TO_IMAGES || exit
+# Fetch everything from remote
+git fetch origin
+
+# Check if the branch "metadata" exists on the remote
+if git show-ref --verify --quiet refs/remotes/origin/metadata; then
+    # Branch exists, check it out
+    git checkout metadata
+else
+    # Branch does not exist, create and check it out
+    git checkout -b metadata
+    git push --set-upstream origin metadata
+fi
+
+# Pull the latest changes from the branch
+git pull origin metadata
+
+# Go to images directory
+cd "$IMAGE_DIR" || exit
 
 commit_message="Annotations"
 
-# add json files to Git
+# Add json files to Git
 git add "*.json"
 
+# Commit changes
 git commit -m "$commit_message"
 
-git push
+# Push changes to the remote branch
+git push origin metadata
 
-# return to original directory
+# Return to original directory
 cd -
