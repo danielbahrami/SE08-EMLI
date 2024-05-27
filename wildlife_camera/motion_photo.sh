@@ -1,6 +1,6 @@
 #! bin/bash
 
-# Define photo1
+# Define first photo
 output_dir="WilfLifePhotos"
 photo_time1=$timestamp
 photo_file1="${photo_time1}.jpg"
@@ -46,7 +46,7 @@ EOF
         echo "$json_content" >"$output_dir/$current_date/${photo_time2}.json"
     fi
 
-    # photo2 bocomes photo1
+    # First photo becomes second photo
     photo_file1=$photo_file2
     photo_time1=$photo_time2
 
