@@ -1,35 +1,34 @@
 #!/bin/bash
 
 # Path to images
-IMAGE_DIR=${1:-"/path/to/your/images"}
-#Git users
-USER_NAME=${2:-"Your Name"}
-USER_EMAIL=${3:-"your.email@example.com"}
+IMAGE_DIR=${1:-"/path/to/images"}
+# Git author
+AUTHOR_NAME=${2:-"Name"}
+AUTHOR_EMAIL=${3:-"email@example.com"}
 
-# Create user
-git config --local user.name "$USER_NAME"
-git config --local user.email "$USER_EMAIL"
+# Configure author
+git config --local user.name "$AUTHOR_NAME"
+git config --local user.email $AUTHOR_EMAIL
 
 # Fetch everything from remote
 git fetch origin
 
 # Check if the branch "metadata" exists on the remote
 if git show-ref --verify --quiet refs/remotes/origin/metadata; then
-    # Branch exists, check it out
+    # Branch exists, check it out and pull
     git checkout metadata
+    git pull
 else
     # Branch does not exist, create and check it out
     git checkout -b metadata
     git push --set-upstream origin metadata
 fi
 
-# Pull the latest changes from the branch
-git pull origin metadata
-
 # Go to images directory
 cd "$IMAGE_DIR" || exit
 
-commit_message="Annotations"
+# Commit message
+commit_message="Upload metadata"
 
 # Add json files to Git
 git add "*.json"
