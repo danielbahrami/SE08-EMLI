@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MQTT_HOST=${1:-"mqtt://mqtt-dashboard.com"}
+MQTT_HOST=${1:-"mqtt-dashboard.com"}
 MQTT_TOPIC_COMMAND=${2:-"org/sdu/2024/emli/group04/wilddrone/rain/command"}
 MQTT_TOPIC_RESPONSE=${3:-"org/sdu/2024/emli/group04/wilddrone/rain/response"}
 
