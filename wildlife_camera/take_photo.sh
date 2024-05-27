@@ -33,7 +33,7 @@ json_content=$(
   "Create Date": "$current_date $local_time",
   "Create Seconds Epoch": $epoch_seconds,
   "Trigger": "$trigger",
-  "Subject Distance": $subject_distance,
+  "Subject Distance": "$subject_distance",
   "Exposure Time": "$exposure_time",
   "ISO": $iso
 }
