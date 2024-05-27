@@ -15,5 +15,5 @@ while true; do # Keep an infinite loop to reconnect when connection lost/broker 
         # Publish message to MQTT broker
         mosquitto_pub -h $MQTT_HOST -t $MQTT_TOPIC_COMMAND -m $rain_detect_value
     fi
-    sleep 5 # Wait 5 seconds until reconnection
+    sleep 5 # sleap before reading again
 done
