@@ -61,9 +61,8 @@ while true; do
     fi
   done
 
-  # go to upload.sh
-  echo "Now pushing the annotated image up into Github by running upload.sh"
-  if [ $CHECK_ANNOTATION_STATUS = 1 ]; then
+  # directss upload.sh
+  if [ $CHECK_ANNOTATION_STATUS -eq 1 ]; then
     echo "Uploading annotated files"
     ./upload.sh $IMAGE_DIR $USER_NAME $USER_EMAIL
   else
