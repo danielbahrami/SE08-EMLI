@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define variables
-base_dir="$HOME/wildlife_photos"
+base_dir="../wildlife_photos"
 current_date=$(date +"%Y-%m-%d")
 timestamp=$(date +"%H%M%S_%3N")
 local_time=$(date +"%H:%M:%S.%3N%:z")
