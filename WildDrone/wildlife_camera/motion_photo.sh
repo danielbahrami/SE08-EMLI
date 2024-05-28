@@ -2,8 +2,7 @@
 
 # Define first photo
 output_dir="../wildlife_photos"
-timestamp=$(date +"%H%M%S_%3N")
-photo_time1=$timestamp
+photo_time1=$(date +"%H%M%S_%3N")
 photo_file1="${photo_time1}.jpg"
 # Take first inital photo
 rpicam-still -t 0.01 --width 500 --height 500 -o "$photo_file1"
@@ -11,8 +10,7 @@ rpicam-still -t 0.01 --width 500 --height 500 -o "$photo_file1"
 while true; do
     sleep 2
     # Take second photo
-    timestamp2=$(date +"%H%M%S_%3N")
-    photo_time2=$timestamp2
+    photo_time2=$(date +"%H%M%S_%3N")
     photo_file2="${photo_time2}.jpg"
     rpicam-still -t 0.01 --width 500 --height 500 -o "$photo_file2"
     if python3 ./motion_detect.py $photo_file1 $photo_file2 | grep -q 'Motion detected'; then # Save image
@@ -48,7 +46,8 @@ EOF
         echo "$json_content" >"$output_dir/$current_date/${photo_time2}.json"
     fi
 
-    # First photo becomes second photo
+    # Second photo becomes first photo
+    rm $photo_file1
     photo_file1=$photo_file2
     photo_time1=$photo_time2
 
