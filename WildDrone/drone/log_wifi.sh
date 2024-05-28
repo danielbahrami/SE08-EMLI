@@ -1,5 +1,5 @@
 #!/bin/bash
-wifi_interface="wlp0s20f3"
+wifi_interface="wlp3s0"
 chmod +x create_database.sh
 ./create_database.sh
 # Path to the SQLite database
@@ -17,9 +17,7 @@ get_wifi_signal_data() {
 
 echo "begin logging ..."
 # Main loop to log data
-while true; do
-    get_wifi_signal_data
-    epoch=$(echo $(date +%s))
+while true; do    epoch=$(echo $(date +%s))
     wifi_data=($(get_wifi_signal_data))
     link_quality=${wifi_data[0]}
     signal_level=${wifi_data[1]}
