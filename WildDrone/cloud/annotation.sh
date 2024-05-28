@@ -4,66 +4,67 @@
 IMAGE_DIR=${1:-"/path/to/images"}
 AUTHOR_NAME=${2:-"Name"}
 AUTHOR_EMAIL=${3:-"email@example.com"}
-# Ollama endpoint
+
+# Set up Ollama
+ollama serve
+ollama pull llava
 GENERATEENDPOINT=${4:-"http://localhost:11434/api/generate"}
 
-CHECK_ANNOTATION_STATUS=false
+CHECK_ANNOTATION_STATUS=0
 
 while true; do
   # Loop through each image in the directory
-  for img in "$IMAGE_DIR"/*.{jpg,png}; do
-    # Check if the file exists to handle cases where no files match the pattern
+  for img in "$IMAGE_DIR"*.{jpg,png}; do
+    # Check if the file exist
     if [[ -f "$img" ]]; then
-      echo "Processing $img"
+      echo "img path: $img"
 
-      # Get the filename without the extension
+      # Get the file name without an extension
       filename=$(basename "${img%.*}")
 
       # Construct the corresponding JSON file path
-      json_file="$directory/$base_name.json"
+      json_file="$IMAGE_DIR$filename.json"
 
-      # Check if the annotation already exists
-      # 2>&1 silences all output from the command including error messages
-      if jq -e '.Annotation' "$json_file" >/dev/null 2>&1; then
-        echo "Annotation JSON object already exists for $filename"
+      if jq -e '.Annotation' "$json_file" >/dev/null; then
+        echo "Skipping already annotated image: $image_file"
         continue
       fi
 
       # Base64 encode the image
       # Setting it to 0 means there will be no line breaks in the output, resulting in a single continuous line of base64-encoded data
-      img_base64=$(base64 -w 0 "$image_file")
+      img_base64=$(base64 -w 0 -i $img)
 
       # Payload for Ollama
-      JSON_MSG="{\"model\": \"gemma:7b\", \"prompt\": \"describe this image briefly\", \"stream\": false, \"images\": [\"$img_base64\"]}"
+      JSON_MSG="{\"model\": \"llava\", \"prompt\": \"describe this image shortly\", \"stream\": false, \"images\": [\"$img_base64\"]}"
 
       # Send the JSON payload to Ollama's generate endpoint using curl
-      curl_response=$(curl -s -X POST "$GENERATEENDPOINT" \
+      curl_response=$(curl -X POST "$GENERATEENDPOINT" \
         -H "Content-Type: application/json" \
         -d "$JSON_MSG")
 
-      # Check if failed
+      # Failure check
       if [ $? -ne 0 ]; then
-        echo "Annotation of $filename failed"
+        echo "Annotating $filename failed"
         continue
       fi
 
-      # Extract the description response from the curl response
+      # Extract the description response from curl
       response=$(echo "$curl_response" | jq -r '.response')
-      # Create the JSON annotation
-      ANNOTATION_JSON="{\"Annotation\": {\"Source\": \"gemma:7b\", \"Test\": \"$response\"}}"
 
-      # Write the JSON annotation to the .json file
-      jq --argjson annotation "$ANNOTATION_JSON" '.+= [$annotation]' $json_file.json >$temp.json && mv $temp.json $json_file.json
-      $CHECK_ANNOTATION_STATUS=true
+      # Create the JSON annotation
+      ANNOTATION_JSON="{\"Source\": \"llava\", \"Test\": \"$response\"}"
+
+      # Write the newly created JSON annotation to the json file
+      jq --argjson Annotation "$ANNOTATION_JSON" '.+={$Annotation}' "$json_file" >tmp.json && mv tmp.json "$json_file"
+
+      $CHECK_ANNOTATION_STATUS=1
     fi
   done
 
   # Run upload.sh
-  echo "Publishing the metadata by running upload.sh"
-  if [ $CHECK_ANNOTATION_STATUS = true ]; then
+  if [ $CHECK_ANNOTATION_STATUS -eq 1 ]; then
     echo "Uploading annotated files"
-    ./upload.sh $IMAGE_DIR $AUTHOR_NAME $AUTHOR_EMAIL
-    CHECK_ANNOTATION_STATUS=false
+    ./upload.sh $IMAGE_DIR $USER_NAME $USER_EMAIL
   else
     echo "No changes in annotated files"
   fi
