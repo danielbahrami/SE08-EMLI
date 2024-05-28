@@ -27,9 +27,12 @@ sshpass -p $cam_pass ssh $cam_home sudo date --set @$(date -u +%s)
 
 chmod 777 ./log_wifi.sh
 chmod 777 ./save_files.sh
+./log_wifi.sh &
 cat ./save_files.sh | sshpass -p $cam_pass ssh $cam_home
 
 mkdir -p ~/wildlife_photos
 sshpass -p $cam_photo_pass rsync -a --ignore-existing $cam_photo_path ~/wildlife_photos
+
+sleep 5
 
 nmcli con down $cam_ssid

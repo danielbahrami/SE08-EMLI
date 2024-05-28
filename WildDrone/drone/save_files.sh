@@ -7,8 +7,6 @@ cam_path="$cam_home:$cam_photo_path"
 drone_path="/home/simonplatz/Desktop"
 dron_id="DRONe_01"
 
-ls -a
-
 cd $cam_photo_path
 for dir in */; do
     ls -a
