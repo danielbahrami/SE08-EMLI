@@ -2,7 +2,7 @@ from flask import Flask, send_from_directory, render_template_string, request, r
 import os
 
 app = Flask(__name__)
-BASE_DIR = ""
+BASE_DIR = "../wildlife_photos"
 
 @app.route("/")
 @app.route("/<path:subpath>")
@@ -25,8 +25,8 @@ def show_files(subpath=""):
 
 TEMPLATE = """
 <!doctype html>
-<title>Wildlife Camera File Explorer</title>
-<h1>Wildlife Camera File Explorer</h1>
+<title>Wildlife Photos File Explorer</title>
+<h1>Wildlife Photos File Explorer</h1>
 <ul>
   <li><a href="{{ url_for("show_files", subpath="") }}">Home</a></li>
   {% if parent %}

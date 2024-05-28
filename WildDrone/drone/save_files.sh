@@ -2,7 +2,7 @@
 
 cam_home="simonplatz@192.168.10.1"
 cam_pass="simonplatz"
-cam_photo_path="/home/simonplatz/wildlife_photos"
+cam_photo_path="../wildlife_photos"
 cam_path="$cam_home:$cam_photo_path"
 drone_path="/home/simonplatz/Desktop"
 dron_id="DRONe_01"
