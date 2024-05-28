@@ -15,9 +15,10 @@ get_wifi_signal_data() {
     echo "$link_quality $signal_level"
 }
 
-echo "begin logging ..."
+echo "Logging..."
 # Main loop to log data
-while true; do    epoch=$(echo $(date +%s))
+while true; do
+    epoch=$(echo $(date +%s))
     wifi_data=($(get_wifi_signal_data))
     link_quality=${wifi_data[0]}
     signal_level=${wifi_data[1]}
@@ -28,5 +29,3 @@ while true; do    epoch=$(echo $(date +%s))
     sqlite3 $databasePath "INSERT INTO WifiLog (epoch, link_quality, signal_level) VALUES ($epoch, $link_quality, $signal_level);"
     sleep 1 # Wait before logging again
 done
-
-echo "done logging"
