@@ -1,0 +1,17 @@
+{
+  "File Name": "152054_694.jpg",
+  "Create Date": "2024-05-30 15:20:54.697+02:00",
+  "Create Seconds Epoch": 1717075254.699,
+  "Trigger": "External",
+  "Subject Distance": "inf",
+  "Exposure Time": "1/1812",
+  "ISO": 115,
+  "Drone Copy": {
+    "Drone Id": "DRONe_01",
+    "Seconds Epoch": "1717075465.902"
+  },
+  "Annotation": {
+    "Source": "llava",
+    "Test": " The image shows an indoor room with a window looking out onto a building and a blue sky. It appears to be a photograph taken from inside the building, showing sunlight streaming through the window, casting shadows on the floor. "
+  }
+}

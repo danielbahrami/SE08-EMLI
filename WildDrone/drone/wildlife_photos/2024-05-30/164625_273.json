@@ -1,0 +1,17 @@
+{
+  "File Name": "164625_273.jpg",
+  "Create Date": "2024-05-30 16:46:26.687+02:00",
+  "Create Seconds Epoch": 1717080386.684,
+  "Trigger": "motion",
+  "Subject Distance": "0.1683785149 m",
+  "Exposure Time": "1/49",
+  "ISO": 113,
+  "Drone Copy": {
+    "Drone Id": "DRONe_01",
+    "Seconds Epoch": "1717080414.523"
+  },
+  "Annotation": {
+    "Source": "llava",
+    "Test": " The image shows a hand in motion with the thumb and index finger forming a peace sign against a blurred background, indicating that the photo may be out of focus. The person's arm is visible but their identity is not clear. "
+  }
+}

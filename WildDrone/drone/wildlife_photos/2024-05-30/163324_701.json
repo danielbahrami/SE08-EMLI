@@ -1,0 +1,17 @@
+{
+  "File Name": "163324_701.jpg",
+  "Create Date": "2024-05-30 16:33:24.703+02:00",
+  "Create Seconds Epoch": 1717079604.705,
+  "Trigger": "External",
+  "Subject Distance": "inf",
+  "Exposure Time": "1/56",
+  "ISO": 113,
+  "Drone Copy": {
+    "Drone Id": "DRONe_01",
+    "Seconds Epoch": "1717080414.324"
+  },
+  "Annotation": {
+    "Source": "llava",
+    "Test": " The image shows a close-up of a section of a wall with a light reflection or shadow on it. The angle is such that it appears the surface is curved, perhaps due to perspective distortion. There are no distinct features or objects in the viewable from this angle. "
+  }
+}
