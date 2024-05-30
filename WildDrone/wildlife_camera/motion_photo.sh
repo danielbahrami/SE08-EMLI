@@ -36,7 +36,7 @@ while true; do
         "File Name": "$photo_filename",
         "Create Date": "$current_date $local_time",
         "Create Seconds Epoch": $epoch_seconds,
-        "Trigger": "$trigger",
+        "Trigger": "Motion",
         "Subject Distance": $subject_distance,
         "Exposure Time": "$exposure_time",
         "ISO": $iso
