@@ -33,7 +33,7 @@ while true; do
         json_content=$(
             cat <<EOF
         {
-        "File Name": "$photo_filename",
+        "File Name": "$photo_file2",
         "Create Date": "$current_date $local_time",
         "Create Seconds Epoch": $epoch_seconds,
         "Trigger": "Motion",
