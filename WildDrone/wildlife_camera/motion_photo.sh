@@ -1,10 +1,11 @@
 #! bin/bash
+
 rm *.jpg
 # Define first photo
 output_dir="../wildlife_photos"
 photo_time1=$(date +"%H%M%S_%3N")
 photo_file1="${photo_time1}.jpg"
-# Take first inital photo
+# Take first initial photo
 rpicam-still -t 0.01 --width 500 --height 500 -o "$photo_file1"
 
 while true; do
@@ -51,5 +52,4 @@ EOF
     rm $photo_file1
     photo_file1=$photo_file2
     photo_time1=$photo_time2
-
 done

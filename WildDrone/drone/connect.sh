@@ -9,14 +9,14 @@ cam_photo_path="$cam_home:SE08-EMLI/WildDrone/wildlife_photos"
 cam_photo_pass="simonplatz"
 
 while true; do
-    echo "Looking for cam"
+    echo "Looking for camera..."
     # Find Wi-Fi
     while true; do
         if nmcli -f SSID device wifi | grep -q $cam_ssid; then
             break
         fi
     done
-    echo "Found cam"
+    echo "Found camera"
     echo "Connecting..."
     # Connect
     nmcli dev wifi connect $cam_ssid password $cam_wifi_pass

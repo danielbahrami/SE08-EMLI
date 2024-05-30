@@ -16,9 +16,9 @@ while true; do
   for SUB_DIR in "$IMAGE_DIR"*/; do
     # Loop through each image in the directory
     for img in "$SUB_DIR"*.{jpg,png}; do
-      # Check if the file exist
+      # Check if the file exists
       if [[ -f "$img" ]]; then
-        echo "img path: $img"
+        echo "Image path: $img"
 
         # Get the file name without an extension
         filename=$(basename "${img%.*}")
@@ -36,7 +36,7 @@ while true; do
         img_base64=$(base64 -w 0 -i $img)
 
         # Payload for Ollama
-        JSON_MSG="{\"model\": \"llava\", \"prompt\": \"describe this image shortly\", \"stream\": false, \"images\": [\"$img_base64\"]}"
+        JSON_MSG="{\"model\": \"llava\", \"prompt\": \"Describe this image shortly\", \"stream\": false, \"images\": [\"$img_base64\"]}"
 
         # Send the JSON payload to Ollama's generate endpoint using curl
         curl_response=$(curl -X POST "$GENERATEENDPOINT" \
@@ -56,7 +56,7 @@ while true; do
         ANNOTATION_JSON="{\"Source\": \"llava\", \"Test\": \"$response\"}"
 
         # Write the newly created JSON annotation to the json file
-        jq --argjson Annotation "$ANNOTATION_JSON" '.+={$Annotation}' "$json_file" > "$SUB_DIR/tmp.json" && mv "$SUB_DIR/tmp.json" "$json_file"
+        jq --argjson Annotation "$ANNOTATION_JSON" '.+={$Annotation}' "$json_file" >"$SUB_DIR/tmp.json" && mv "$SUB_DIR/tmp.json" "$json_file"
 
         CHECK_ANNOTATION_STATUS=1
       fi
@@ -65,7 +65,7 @@ while true; do
 
   # Run upload.sh
   if [ $CHECK_ANNOTATION_STATUS -eq 1 ]; then
-    echo "Uploading annotated files"
+    echo "Uploading annotated files..."
     ./upload.sh $IMAGE_DIR $USER_NAME $USER_EMAIL
   else
     echo "No changes in annotated files"

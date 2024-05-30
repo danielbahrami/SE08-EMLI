@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Change your device accordinly to the usb port.
-DEVICE=${1:-"/dev/ttyAIO"}
+DEVICE=${1:-"/dev/ttyACM0"}
 MQTT_HOST=${2:-"mqtt-dashboard.com"}
 MQTT_TOPIC_COMMAND=${3:-"org/sdu/2024/emli/group04/wilddrone/rain/command"}
 
