@@ -56,9 +56,9 @@ while true; do
         ANNOTATION_JSON="{\"Source\": \"llava\", \"Test\": \"$response\"}"
 
         # Write the newly created JSON annotation to the json file
-        jq --argjson Annotation "$ANNOTATION_JSON" '.+={$Annotation}' "$json_file" >tmp.json && mv tmp.json "$json_file"
+        jq --argjson Annotation "$ANNOTATION_JSON" '.+={$Annotation}' "$json_file" > "$SUB_DIR/tmp.json" && mv "$SUB_DIR/tmp.json" "$json_file"
 
-        $CHECK_ANNOTATION_STATUS=1
+        CHECK_ANNOTATION_STATUS=1
       fi
     done
   done

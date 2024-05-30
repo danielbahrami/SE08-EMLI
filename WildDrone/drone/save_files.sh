@@ -1,15 +1,13 @@
 #!/bin/bash
 
-cam_home="simonplatz@192.168.10.1"
+cam_home="simonplatz@10.0.0.10"
 cam_pass="simonplatz"
-cam_photo_path="../wildlife_photos"
+cam_photo_path="SE08-EMLI/WildDrone/wildlife_photos/"
 cam_path="$cam_home:$cam_photo_path"
-drone_path="/home/simonplatz/Desktop"
 dron_id="DRONe_01"
 
 cd $cam_photo_path
 for dir in */; do
-    ls -a
     cd $dir
     for file in *; do
         ext="${file##*.}"
@@ -22,6 +20,7 @@ for dir in */; do
                 echo "setting copy time"
                 jq --arg id "$dron_id" --arg epoch $epoch_seconds '. += {"Drone Copy": { "Drone Id": $id, "Seconds Epoch": $epoch } }' $file &>tmp.json && cp tmp.json $file
                 jq $file
+                rm tmp.json
             fi
         fi
     done

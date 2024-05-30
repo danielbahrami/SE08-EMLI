@@ -1,19 +1,21 @@
 #! bin/bash
 
 # Define first photo
-output_dir="WilfLifePhotos"
+output_dir="../wildlife_photos"
+timestamp=$(date +"%H%M%S_%3N")
 photo_time1=$timestamp
 photo_file1="${photo_time1}.jpg"
 # Take first inital photo
-rpicam-still -t 0.01 -o "$photo_file1"
+rpicam-still -t 0.01 --width 500 --height 500 -o "$photo_file1"
 
 while true; do
     sleep 2
     # Take second photo
-    photo_time2=$timestamp
+    timestamp2=$(date +"%H%M%S_%3N")
+    photo_time2=$timestamp2
     photo_file2="${photo_time2}.jpg"
-    rpicam-still -t 0.01 -o "$photo_file2"
-    if python3 ./motion_detec.py $photo_file1 $photo_file2 | grep -q 'Motion detected'; then # Save image
+    rpicam-still -t 0.01 --width 500 --height 500 -o "$photo_file2"
+    if python3 ./motion_detect.py $photo_file1 $photo_file2 | grep -q 'Motion detected'; then # Save image
         # Create the dir if needed
         current_date=$(date '+%Y-%m-%d')
         mkdir -p $output_dir/$current_date
