@@ -9,7 +9,7 @@ while true; do
     mosquitto_sub -h $MQTT_HOST -t $MQTT_TOPIC_COMMAND | while read -r payload; do
         # Check if there is rain
         if [ $payload -eq 1 ]; then
-            mosquitto_pub -h $MQTT_HOST -t $MQTT_TOPIC_RESPONSE -m "trigger wiper"
+            mosquitto_pub -h $MQTT_HOST -t $MQTT_TOPIC_RESPONSE -m "wipe"
         fi
     done
     sleep 5 # Wait 5 seconds before reconnecting

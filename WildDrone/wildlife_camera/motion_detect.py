@@ -76,9 +76,9 @@ def main():
     path_img2 = sys.argv[2]
     motion = cam.motion_detect(path_img1, path_img2)
     if motion:
-        print('Motion detected')
+        print(1)
     else:
-        print('No motion')
+        print(0)
 
 
 if __name__ == "__main__":

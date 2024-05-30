@@ -18,7 +18,7 @@ photo_filepath="$base_dir/$current_date/$photo_filename"
 json_filepath="$base_dir/$current_date/$json_filename"
 
 # Take a photo using the Raspberry Pi Camera
-rpicam-still -t 0.01 -o "$photo_filepath"
+rpicam-still -t 0.01 --width 500 --height 500 -o "$photo_filepath"
 
 # Read EXIF data
 subject_distance=$(exiftool -s -s -s -SubjectDistance "$photo_filepath")

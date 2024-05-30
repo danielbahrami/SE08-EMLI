@@ -1,10 +1,11 @@
 #!/bin/bash
+
 wifi_interface="wlp3s0"
 chmod +x create_database.sh
 ./create_database.sh
 # Path to the SQLite database
-databasePath="/home/simonplatz/database/wifi_log.db"
-echo $databasePath
+database_path="/home/simonplatz/database/wifi_log.db"
+echo $database_path
 
 # Function to get Wi-Fi signal data from /proc/net/wireless
 get_wifi_signal_data() {
@@ -26,6 +27,6 @@ while true; do
         break
     fi
     # Insert data into SQLite database
-    sqlite3 $databasePath "INSERT INTO WifiLog (epoch, link_quality, signal_level) VALUES ($epoch, $link_quality, $signal_level);"
+    sqlite3 $database_path "INSERT INTO WifiLog (epoch, link_quality, signal_level) VALUES ($epoch, $link_quality, $signal_level);"
     sleep 1 # Wait before logging again
 done
