@@ -7,8 +7,7 @@ MQTT_TOPIC_RESPONSE=${3:-"org/sdu/2024/emli/group04/wilddrone/rain/response"}
 change_wipe() {
     degrees="$1"
     if [ -c $DEVICE ]; then
-        JSON= "{\"wiper_angle\": $degrees}"
-        echo $JSON >$DEVICE
+        echo "{\"wiper_angle\": $degrees}" >$DEVICE
     fi
     echo "wiping done"
 }
@@ -19,8 +18,8 @@ while true; do
         # Callback to execute whenever a message is received
         echo "Rx MQTT: ${payload}"
         # Control the wiper
-        change_wipe 180
-        echo "wiping 180 degrees"
+        change_wipe 90
+        echo "wiping 90 degrees"
         sleep 2
         change_wipe 0
         echo "wiping 0 degrees"

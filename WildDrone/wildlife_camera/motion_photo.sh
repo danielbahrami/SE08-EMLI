@@ -1,5 +1,5 @@
 #! bin/bash
-
+rm *.jpg
 # Define first photo
 output_dir="../wildlife_photos"
 photo_time1=$(date +"%H%M%S_%3N")
@@ -13,10 +13,11 @@ while true; do
     photo_time2=$(date +"%H%M%S_%3N")
     photo_file2="${photo_time2}.jpg"
     rpicam-still -t 0.01 --width 500 --height 500 -o "$photo_file2"
-    if python3 ./motion_detect.py $photo_file1 $photo_file2 | grep -q 'Motion detected'; then # Save image
+    motion=$(python3 ./motion_detect.py $photo_file1 $photo_file2)
+    if [[ $motion == "1" ]]; then # Save image
         # Create the dir if needed
         current_date=$(date '+%Y-%m-%d')
-        mkdir -p $output_dir/$current_date
+        mkdir -p "$output_dir/$current_date"
         # Copy image
         cp $photo_file2 $output_dir/$current_date/$photo_file2
         # Create sidecar

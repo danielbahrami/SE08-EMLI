@@ -8,7 +8,7 @@ MQTT_TOPIC_COMMAND=${3:-"org/sdu/2024/emli/group04/wilddrone/rain/command"}
 # Keep an infinite loop to reconnect when the connection is lost or broker is unavailable
 while true; do
     # Read JSON message from serial port
-    json_message=$(cat "$DEVICE" | jq -c .)
+    json_message=$(cat "$DEVICE" | head -1)
 
     rain_detect_value=$(echo "$json_message" | jq -r '.rain_detect')
 
